@@ -14,10 +14,8 @@ website:
     tools:
       - icon: trash
         href: https://www.mountainproject.com/area/112001458/the-dump
-      - icon: twitter
-        href: https://x.com
       - icon: linkedin
-        href: https://www.linkedin.com/
+        href: https://www.linkedin.com/in/lucas-jimenez-nc/
       - icon: github
         menu:
           - text: Source Code
@@ -27,7 +25,7 @@ website:
 
 format:
   html:
-    theme: lumen  # flatly, litera, lumen, lux, minty, pulse, sandstone, zephyr, quartz, yeti, cosmo, sketchy
+    theme: minty  # flatly, litera, lumen, lux, minty, pulse, sandstone, zephyr, quartz, yeti, cosmo, sketchy
     css: styles.css
     toc: true
 
