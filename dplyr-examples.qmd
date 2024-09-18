@@ -1,0 +1,95 @@
+---
+title: "Advanced Filter Exercises"
+date: last-modified
+date-format: "[Last modified on] MMMM DD, YYYY, HH:mm:ss zzz"
+
+code-fold: true
+---
+
+
+
+```{r}
+#| message: false
+#| warning: false
+library(tidyverse)
+```
+
+## Required packages and datasets
+
+Run the code in the code chunk below to load the dataset `happy_full`.
+
+```{r}
+# install.packages("remotes")
+# remotes::install_github("matthewhirschey/tidybiology", force = TRUE)
+# can also use devtools::install_github() since devtools is installed in
+# system library
+library(tidybiology)
+data(happy_full)
+happy_full |> 
+  DT::datatable()
+```
+
+1. Choose countries that are NOT in Europe i.e. countries that have a `region` entry that is NOT equal to either `"Western Europe"` or `"Central and Eastern Europe"`.
+
+```{r}
+happy_full |>
+  filter(!region %in% c("Western Europe", "Central and Eastern Europe")) -> ans1
+ggplot(ans1, aes(x = fct_infreq(region))) +
+  geom_bar(fill = "darkgreen", color = "black") +
+  coord_flip() +
+  theme_classic() + 
+  labs(x = "")
+```
+
+2. Choose countries that do NOT (have an above average `healthy_life_expectancy` or above average `generosity` score).
+
+```{r}
+happy_full |>
+  filter(!(
+    healthy_life_expectancy > mean(healthy_life_expectancy) |
+      generosity > mean(generosity)
+  )) -> ans3
+dim(ans3)
+# This is the same as
+happy_full |>
+  filter((
+    healthy_life_expectancy <= mean(healthy_life_expectancy) & 
+      generosity <= mean(generosity)
+  )) -> ans4
+dim(ans4)
+```
+
+3. Choose countries that are either in Europe or have a `ladder_score` above 7, and have a `healthy_life_expectancy` above 70.
+
+```{r}
+happy_full |>
+  filter((
+    region %in% c("Western Europe", "Central and Eastern Europe") |
+      ladder_score > 7
+  ) & healthy_life_expectancy > 70) -> ans5
+ans5 |>
+  relocate(region, ladder_score, healthy_life_expectancy) |>
+  DT::datatable()
+# Note this is not the same as:
+happy_full |>
+  filter(
+    healthy_life_expectancy > 70 &
+      ladder_score > 7 |
+      region %in% c("Western Europe", "Central and Eastern Europe")
+  ) -> ans6
+ans6 |>
+  relocate(region, ladder_score, healthy_life_expectancy) |>
+  DT::datatable()
+# To make the last bit of code work use parentheses as follows:
+happy_full |>
+  filter(healthy_life_expectancy > 70 &
+           (
+             ladder_score > 7 |
+               region %in% c("Western Europe", "Central and Eastern Europe")
+           )) -> ans6a
+ans6a |>
+  relocate(region, ladder_score, healthy_life_expectancy) |>
+  DT::datatable()
+```
+
+---
