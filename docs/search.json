@@ -19,5 +19,26 @@
     "title": "Quarto Web Demo",
     "section": "",
     "text": "This is the main landing page!\n\nTo learn more about geezers.\nTo learn more about Quarto websites."
+  },
+  {
+    "objectID": "index.html#table-1",
+    "href": "index.html#table-1",
+    "title": "Knitr-Slides",
+    "section": "Table 1",
+    "text": "Table 1\n\n\n[1] 2"
+  },
+  {
+    "objectID": "index.html#table-2",
+    "href": "index.html#table-2",
+    "title": "Knitr-Slides",
+    "section": "Table 2",
+    "text": "Table 2\n\n\n[1] -1"
+  },
+  {
+    "objectID": "index.html#table-3",
+    "href": "index.html#table-3",
+    "title": "Knitr-Slides",
+    "section": "Table 3",
+    "text": "Table 3\n\n\n[1] 7"
   }
 ]
