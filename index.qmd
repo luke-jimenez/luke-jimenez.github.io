@@ -1,12 +1,12 @@
 ---
-title: "Knitr-Slides"
-format:
-  revealjs:
-    chalkboard: true
-    theme: serif
-code-fold: true
+title: "Quarto Web Demo"
 ---
 
+This is the main landing page!
+
+* To learn more about [geezers](https://www.thegeezer.com/).
+
+* To learn more about [Quarto websites](https://quarto.org/docs/websites).
 
 ## Table 1
 ```{r}

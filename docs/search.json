@@ -18,27 +18,27 @@
     "href": "index.html",
     "title": "Quarto Web Demo",
     "section": "",
-    "text": "This is the main landing page!\n\nTo learn more about geezers.\nTo learn more about Quarto websites."
+    "text": "This is the main landing page!"
   },
   {
     "objectID": "index.html#table-1",
     "href": "index.html#table-1",
-    "title": "Knitr-Slides",
+    "title": "Quarto Web Demo",
     "section": "Table 1",
-    "text": "Table 1\n\n\n[1] 2"
+    "text": "Table 1\n\n1 + 1\n\n[1] 2"
   },
   {
     "objectID": "index.html#table-2",
     "href": "index.html#table-2",
-    "title": "Knitr-Slides",
+    "title": "Quarto Web Demo",
     "section": "Table 2",
-    "text": "Table 2\n\n\n[1] -1"
+    "text": "Table 2\n\n1-2\n\n[1] -1"
   },
   {
     "objectID": "index.html#table-3",
     "href": "index.html#table-3",
-    "title": "Knitr-Slides",
+    "title": "Quarto Web Demo",
     "section": "Table 3",
-    "text": "Table 3\n\n\n[1] 7"
+    "text": "Table 3\n\n11 - 4\n\n[1] 7"
   }
 ]
