@@ -1,3 +1,9 @@
 ---
 title: "About Me"
 ---
+
+My name is Lucas Jimenez and I am a Junior at Appalachian State University, Honors College.
+
+
+![](./pictures/IMG_2284.png){width=40% fig-align="center"}
+
