@@ -2,5 +2,8 @@
 title: "Projects"
 ---
 
-* [Data Manipulation in R using the 'dplyr' package](dplyr-examples.qmd)
+* [Data Manipulation in R using the 'dplyr' package](./projects/dplyr-examples.qmd)
+
+
+* [My Joint Research on "Interpolation using Radial Basis Functions and the Runge Phenomena"](./projects/Interpolation_with_RBF-1.png)
 

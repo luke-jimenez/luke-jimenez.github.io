@@ -1,58 +1,23 @@
 [
   {
-    "objectID": "project.html",
-    "href": "project.html",
-    "title": "Projects",
-    "section": "",
-    "text": "Data Manipulation in R using the ‘dplyr’ package"
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About Me",
-    "section": "",
-    "text": "This is where you get to write about yourself. ll\nIf your favorite color is purple you might show a graph that uses purple."
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Quarto Web Demo",
-    "section": "",
-    "text": "This is the main landing page!"
-  },
-  {
-    "objectID": "index.html#table-1",
-    "href": "index.html#table-1",
-    "title": "Quarto Web Demo",
-    "section": "Table 1",
-    "text": "Table 1\n\n1 + 1\n\n[1] 2"
-  },
-  {
-    "objectID": "index.html#table-2",
-    "href": "index.html#table-2",
-    "title": "Quarto Web Demo",
-    "section": "Table 2",
-    "text": "Table 2\n\n1-2\n\n[1] -1"
-  },
-  {
-    "objectID": "index.html#table-3",
-    "href": "index.html#table-3",
-    "title": "Quarto Web Demo",
-    "section": "Table 3",
-    "text": "Table 3\n\n11 - 4\n\n[1] 7"
-  },
-  {
-    "objectID": "dplyr-examples.html",
-    "href": "dplyr-examples.html",
+    "objectID": "projects/dplyr-examples.html",
+    "href": "projects/dplyr-examples.html",
     "title": "Advanced Filter Exercises",
     "section": "",
     "text": "Code\nlibrary(tidyverse)"
   },
   {
-    "objectID": "dplyr-examples.html#required-packages-and-datasets",
-    "href": "dplyr-examples.html#required-packages-and-datasets",
+    "objectID": "projects/dplyr-examples.html#required-packages-and-datasets",
+    "href": "projects/dplyr-examples.html#required-packages-and-datasets",
     "title": "Advanced Filter Exercises",
     "section": "Required packages and datasets",
     "text": "Required packages and datasets\nRun the code in the code chunk below to load the dataset happy_full.\n\n\nCode\n# install.packages(\"remotes\")\n# remotes::install_github(\"matthewhirschey/tidybiology\", force = TRUE)\n# can also use devtools::install_github() since devtools is installed in\n# system library\nlibrary(tidybiology)\ndata(happy_full)\nhappy_full |&gt; \n  DT::datatable()\n\n\n\n\n\n\n\n\nChoose countries that are NOT in Europe i.e. countries that have a region entry that is NOT equal to either \"Western Europe\" or \"Central and Eastern Europe\".\n\n\n\nCode\nhappy_full |&gt;\n  filter(!region %in% c(\"Western Europe\", \"Central and Eastern Europe\")) -&gt; ans1\nggplot(ans1, aes(x = fct_infreq(region))) +\n  geom_bar(fill = \"darkgreen\", color = \"black\") +\n  coord_flip() +\n  theme_classic() + \n  labs(x = \"\")\n\n\n\n\n\n\nChoose countries that do NOT (have an above average healthy_life_expectancy or above average generosity score).\n\n\n\nCode\nhappy_full |&gt;\n  filter(!(\n    healthy_life_expectancy &gt; mean(healthy_life_expectancy) |\n      generosity &gt; mean(generosity)\n  )) -&gt; ans3\ndim(ans3)\n\n\n[1] 27 20\n\n\nCode\n# This is the same as\nhappy_full |&gt;\n  filter((\n    healthy_life_expectancy &lt;= mean(healthy_life_expectancy) & \n      generosity &lt;= mean(generosity)\n  )) -&gt; ans4\ndim(ans4)\n\n\n[1] 27 20\n\n\n\nChoose countries that are either in Europe or have a ladder_score above 7, and have a healthy_life_expectancy above 70.\n\n\n\nCode\nhappy_full |&gt;\n  filter((\n    region %in% c(\"Western Europe\", \"Central and Eastern Europe\") |\n      ladder_score &gt; 7\n  ) & healthy_life_expectancy &gt; 70) -&gt; ans5\nans5 |&gt;\n  relocate(region, ladder_score, healthy_life_expectancy) |&gt;\n  DT::datatable()\n\n\n\n\n\n\n\nCode\n# Note this is not the same as:\nhappy_full |&gt;\n  filter(\n    healthy_life_expectancy &gt; 70 &\n      ladder_score &gt; 7 |\n      region %in% c(\"Western Europe\", \"Central and Eastern Europe\")\n  ) -&gt; ans6\nans6 |&gt;\n  relocate(region, ladder_score, healthy_life_expectancy) |&gt;\n  DT::datatable()\n\n\n\n\n\n\n\nCode\n# To make the last bit of code work use parentheses as follows:\nhappy_full |&gt;\n  filter(healthy_life_expectancy &gt; 70 &\n           (\n             ladder_score &gt; 7 |\n               region %in% c(\"Western Europe\", \"Central and Eastern Europe\")\n           )) -&gt; ans6a\nans6a |&gt;\n  relocate(region, ladder_score, healthy_life_expectancy) |&gt;\n  DT::datatable()"
+  },
+  {
+    "objectID": "project.html",
+    "href": "project.html",
+    "title": "Projects",
+    "section": "",
+    "text": "Data Manipulation in R using the ‘dplyr’ package\nMy Joint Research on “Interpolation using Radial Basis Functions and the Runge Phenomena”"
   }
 ]
