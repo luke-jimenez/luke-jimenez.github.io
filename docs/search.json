@@ -18,7 +18,7 @@
     "href": "index.html",
     "title": "About Me",
     "section": "",
-    "text": "My name is Lucas Jimenez and I am a Junior at Appalachian State University, Honors College."
+    "text": "Hello! I am Luke Jimenez, a Junior at Appalachian State University Honors College. I plan to graduate in May 2026 with a Bachelor of Science in Mathematics with a concentration in Statistics. I am currently researching using radial basis functions to solve partial differential equations for my senior thesis."
   },
   {
     "objectID": "project.html",
@@ -26,5 +26,12 @@
     "title": "Projects",
     "section": "",
     "text": "Data Manipulation in R using the ‘dplyr’ package\nMy Joint Research on “Interpolation using Radial Basis Functions and the Runge Phenomena”"
+  },
+  {
+    "objectID": "index.html#my-skills",
+    "href": "index.html#my-skills",
+    "title": "About Me",
+    "section": "My Skills",
+    "text": "My Skills\n\nProficient in R\nProficient in Python\nProficient in SQL\nProficient in Excel\nCertified AWS Cloud Practitioner\n\nLearn more about me in my resume!"
   }
 ]

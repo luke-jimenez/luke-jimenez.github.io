@@ -2,8 +2,20 @@
 title: "About Me"
 ---
 
-My name is Lucas Jimenez and I am a Junior at Appalachian State University, Honors College.
+Hello! I am Luke Jimenez, a Junior at Appalachian State University Honors College. I plan to graduate in May 2026 with a Bachelor of Science in Mathematics with a concentration in Statistics. I am currently researching using radial basis functions to solve partial differential equations for my senior thesis.
 
+![](./pictures/IMG_2284.png){fig-align="center" width="40%"}
 
-![](./pictures/IMG_2284.png){width=40% fig-align="center"}
+## My Skills
 
+-   Proficient in R
+
+-   Proficient in Python
+
+-   Proficient in SQL
+
+-   Proficient in Excel
+
+-   Certified AWS Cloud Practitioner
+
+[Learn more about me in my resume!](./Official Resume.docx.pdf)
