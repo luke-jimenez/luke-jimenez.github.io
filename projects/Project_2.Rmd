@@ -1,0 +1,141 @@
+---
+title: "Project 2"
+author: "Luke Jimenez"
+date: "2023-11-28"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+# Data Set
+
+housedata <- read.csv("https://lasanthi-asu.github.io/STT3851ClassRepo/Rmarkdown/Data/housedata.csv", 
+                      colClasses = c(id = "character", date = "character", 
+                                     yr_built = "character", zipcode = "factor", grade = "factor"))
+
+housedata$date <- as.Date(housedata$date, "%Y%m%d")
+housedata$waterfront <- factor(housedata$waterfront, labels = c("No", "Yes"))
+housedata$condition <- factor(housedata$condition, labels = c("poor", "fair", "average", "good", "very good"))
+housedata$yr_renovated <- ifelse(housedata$yr_renovated == 0, housedata$yr_built, housedata$yr_renovated)
+housedata$yr_built <- as.Date(ISOdate(housedata$yr_built, 9, 1))  # Complete Year, Sept 1
+housedata$yr_renovated <- as.Date(ISOdate(housedata$yr_renovated, 9, 1))  # Last renovated Year, Sept 1
+
+housedata <- housedata[, -1]
+
+
+# Test Data Set (only use this to send predictions)
+
+#### Perform same steps with test set
+
+housedataT <- read.csv("https://lasanthi-asu.github.io/STT3851ClassRepo/Rmarkdown/Data/housedataTEST.csv", 
+                      colClasses = c(id = "character", date = "character", 
+                                     yr_built = "character", zipcode = "factor", grade = "factor"))
+
+housedataT$date <- as.Date(housedataT$date, "%Y%m%d")
+housedataT$waterfront <- factor(housedataT$waterfront, labels = c("No", "Yes"))
+housedataT$condition <- factor(housedataT$condition, labels = c("poor", "fair", "average", "good", "very good"))
+housedataT$yr_renovated <- ifelse(housedataT$yr_renovated == 0, housedataT$yr_built, housedataT$yr_renovated)
+housedataT$yr_built <- as.Date(ISOdate(housedataT$yr_built, 9, 1))  # Complete Year, Sept 1
+housedataT$yr_renovated <- as.Date(ISOdate(housedataT$yr_renovated, 9, 1))  # Last renovated Year, Sept 1
+housedataT <- housedataT[, -1]
+```
+
+```{r}
+library(leaps)
+library(ggplot2)
+
+housedata_simp <- housedata[,c(-1,-14,-15)]
+housedata_simp <- housedata_simp[-13] #removed dates from data
+
+fit <- regsubsets(price~., data = housedata_simp, nvmax = 60, method = "forward")
+fit_summary <- summary(fit)
+fit_summary
+
+which.max(fit_summary$adjr2)
+which.min(fit_summary$cp)
+which.min(fit_summary$bic)
+
+num_predictors <- c(seq(1:27))
+BIC_vals <- fit_summary$bic
+adjr2_vals <- fit_summary$adjr2
+cp_vals <- fit_summary$cp
+#BIC Graph
+dataframe3 <- data.frame(BIC_vals = c(BIC_vals), num_predictors = c(num_predictors))
+
+ggplot(data = dataframe3, aes(x= num_predictors, y = BIC_vals))+geom_point(color = "Red")+geom_smooth() +theme_bw() + scale_x_continuous(breaks = c(1:10), name = "Number of variables")
+
+dataframe4 <- data.frame(cp_vals = c(cp_vals), num_predictors = c(num_predictors))
+
+ggplot(data = dataframe4, aes(x= num_predictors, y = cp_vals))+geom_point(color = "Red")+geom_smooth() +theme_bw() + scale_x_continuous(breaks = c(1:10), name = "Number of variables")
+
+dataframe5 <- data.frame(adjr2_vals = c(adjr2_vals), num_predictors = c(num_predictors))
+
+ggplot(data = dataframe5, aes(x= num_predictors, y = adjr2_vals))+geom_point(color = "Red")+geom_smooth() +theme_bw() + scale_x_continuous(breaks = c(1:10), name = "Number of variables")
+
+coef(fit,15)
+```
+
+```{r}
+#Analyze correlation and linear relationships
+
+
+model1 <- lm(price~bedrooms + sqft_living + waterfront + grade + sqft_living15 + sqft_lot15 + condition + zipcode +long, data = housedata)
+
+model2 <- lm(log(price)~ + sqft_living + waterfront + grade + sqft_living15 + log(sqft_lot15) + condition + zipcode + long + view , data = housedata)
+
+model3 <- lm(log(price)~. + log(sqft_living) + waterfront + grade + log(sqft_living15) + log(sqft_lot15) + condition + zipcode + long + view , data = housedata)
+
+model4 <- lm(log(price)~  log(sqft_living) + waterfront + grade + log(sqft_living15) + log(sqft_lot15) + condition + zipcode + long + view + bedrooms + bathrooms + lat + date , data = housedata)
+
+JimenezLuke1 <- predict(model1, housedataT)
+JimenezLuke2 <- predict(model4, housedataT)
+
+summary(model4)
+
+final_predictions <- 2.71828182845904523536028747135266249**JimenezLuke2
+
+test_predictions <- exp(JimenezLuke2)
+
+write.csv(test_predictions, file = "Jimenez_Luke.csv")
+
+
+```
+
+```{r}
+#log(price) improves linear relationship of the first two variables below
+
+cormodel1 <- lm(log(price) ~ bedrooms, data = housedata)
+p1<- ggplot(cormodel1, aes(x = .fitted, y = .resid)) + geom_point(color = "red") + theme_bw()
+p1
+cor(log(housedata$price), housedata$bedrooms)
+
+
+cormodel2 <- lm(log(price) ~ sqft_living15, data = housedata)
+p2<- ggplot(cormodel2, aes(x = .fitted, y = .resid)) + geom_point(color = "green") + theme_bw()
+p2
+cor(log(housedata$price), housedata$sqft_living15)
+
+cormodel3 <- lm(price ~ sqft_living , data = housedata)
+p3<- ggplot(cormodel3, aes(x = .fitted, y = .resid)) + geom_point(color = "blue") + theme_bw()
+p3
+cor(housedata$price, housedata$sqft_living)
+
+cormodel4 <- lm(price ~ log(sqft_lot15) , data = housedata)
+p4<- ggplot(cormodel4, aes(x = .fitted, y = .resid)) + geom_point(color = "pink") + theme_bw()
+p4
+cor(housedata$price, log(housedata$sqft_lot15))
+
+```
+
+```{r}
+x <- model.matrix (price~sqft_living + waterfront + grade + sqft_living15 + sqft_lot15 + condition + zipcode + long + view + bedrooms + bathrooms + lat + date,housedata )[,-1] # remove intercept
+y <- housedata$price
+
+library (glmnet)
+grid <- 10^seq(10, -2, length = 100)
+lasso_model <- glmnet(x, y, alpha = 1, lambda = grid)
+lasso_model
+```

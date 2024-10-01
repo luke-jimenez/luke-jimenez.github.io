@@ -7,3 +7,9 @@ title: "Projects"
 
 * [My Joint Research on "Interpolation using Radial Basis Functions and the Runge Phenomena"](./projects/Interpolation_with_RBF-1.png)
 
+
+* [Personal project using 'ggplot2' and 'knitr' in R for data analysis](./projects/Project 2 Write-up.Rmd)
+
+
+
+

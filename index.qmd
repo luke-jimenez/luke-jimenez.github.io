@@ -2,7 +2,7 @@
 title: "About Me"
 ---
 
-Hello! I am Luke Jimenez, a Junior at Appalachian State University Honors College. I plan to graduate in May 2026 with a Bachelor of Science in Mathematics with a concentration in Statistics. I am currently researching using radial basis functions to solve partial differential equations for my senior thesis.
+Hello! My name is Luke Jimenez, and I am currently a Junior at Appalachian State University's Honors College. I am on track to graduate in May 2026 with a Bachelor of Science in Mathematics, concentrating in Statistics. Upon completing my undergraduate degree, I aim to further my education by pursuing a Master’s degree in Data Science. I have a strong passion for data analysis and modeling, check out some of my work in the "Projects" tab! I am currently conducting research on utilizing radial basis functions to solve partial differential equations as part of my senior thesis.
 
 ![](./pictures/IMG_2284.png){fig-align="center" width="40%"}
 
