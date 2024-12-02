@@ -1,0 +1,14 @@
+{
+  "hash": "be0e3a2b12d221986988a2ca9daca1fe",
+  "result": {
+    "markdown": "---\ntitle: \"Student-Exam-Analysis (Project 2)\"\neditor: visual\ncode-fold: TRUE\n---\n\n::: {.cell}\n\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
