@@ -82,5 +82,61 @@
     "title": "Modeling price of homes",
     "section": "References",
     "text": "References\nThis document uses ggplot2 by Wickham et al. (2024), ISLR by James et al. (2021), rmarkdown by Allaire et al. (2024), dplyr by Wickham et al. (2023), knitr by Xie (2024b), and bookdown by Xie (2024a)."
+  },
+  {
+    "objectID": "dplyr-examples.html",
+    "href": "dplyr-examples.html",
+    "title": "Advanced Filter Exercises",
+    "section": "",
+    "text": "Code\nlibrary(tidyverse)"
+  },
+  {
+    "objectID": "dplyr-examples.html#required-packages-and-datasets",
+    "href": "dplyr-examples.html#required-packages-and-datasets",
+    "title": "Advanced Filter Exercises",
+    "section": "Required packages and datasets",
+    "text": "Required packages and datasets\nRun the code in the code chunk below to load the dataset happy_full.\n\n\nCode\n# install.packages(\"remotes\")\n# remotes::install_github(\"matthewhirschey/tidybiology\", force = TRUE)\n# can also use devtools::install_github() since devtools is installed in\n# system library\nlibrary(tidybiology)\ndata(happy_full)\nhappy_full |&gt; \n  DT::datatable()\n\n\n\n\n\n\n\n\nChoose countries that are NOT in Europe i.e. countries that have a region entry that is NOT equal to either \"Western Europe\" or \"Central and Eastern Europe\".\n\n\n\nCode\nhappy_full |&gt;\n  filter(!region %in% c(\"Western Europe\", \"Central and Eastern Europe\")) -&gt; ans1\nggplot(ans1, aes(x = fct_infreq(region))) +\n  geom_bar(fill = \"darkgreen\", color = \"black\") +\n  coord_flip() +\n  theme_classic() + \n  labs(x = \"\")\n\n\n\n\n\n\nChoose countries that do NOT (have an above average healthy_life_expectancy or above average generosity score).\n\n\n\nCode\nhappy_full |&gt;\n  filter(!(\n    healthy_life_expectancy &gt; mean(healthy_life_expectancy) |\n      generosity &gt; mean(generosity)\n  )) -&gt; ans3\ndim(ans3)\n\n\n[1] 27 20\n\n\nCode\n# This is the same as\nhappy_full |&gt;\n  filter((\n    healthy_life_expectancy &lt;= mean(healthy_life_expectancy) & \n      generosity &lt;= mean(generosity)\n  )) -&gt; ans4\ndim(ans4)\n\n\n[1] 27 20\n\n\n\nChoose countries that are either in Europe or have a ladder_score above 7, and have a healthy_life_expectancy above 70.\n\n\n\nCode\nhappy_full |&gt;\n  filter((\n    region %in% c(\"Western Europe\", \"Central and Eastern Europe\") |\n      ladder_score &gt; 7\n  ) & healthy_life_expectancy &gt; 70) -&gt; ans5\nans5 |&gt;\n  relocate(region, ladder_score, healthy_life_expectancy) |&gt;\n  DT::datatable()\n\n\n\n\n\n\n\nCode\n# Note this is not the same as:\nhappy_full |&gt;\n  filter(\n    healthy_life_expectancy &gt; 70 &\n      ladder_score &gt; 7 |\n      region %in% c(\"Western Europe\", \"Central and Eastern Europe\")\n  ) -&gt; ans6\nans6 |&gt;\n  relocate(region, ladder_score, healthy_life_expectancy) |&gt;\n  DT::datatable()\n\n\n\n\n\n\n\nCode\n# To make the last bit of code work use parentheses as follows:\nhappy_full |&gt;\n  filter(healthy_life_expectancy &gt; 70 &\n           (\n             ladder_score &gt; 7 |\n               region %in% c(\"Western Europe\", \"Central and Eastern Europe\")\n           )) -&gt; ans6a\nans6a |&gt;\n  relocate(region, ladder_score, healthy_life_expectancy) |&gt;\n  DT::datatable()"
+  },
+  {
+    "objectID": "projects/Housing-Write-Up.html",
+    "href": "projects/Housing-Write-Up.html",
+    "title": "Modeling price of homes",
+    "section": "",
+    "text": "The Department of Assessments in King County stores a significant amount of data on the homes within the county. In this paper, we will be using the different characteristics or predictor variables listed within this data in order to estimate the price of the homes. Creating a model to predict price will help the reader understand the relationship of price to the predictor variables, and how significant each predictor is. The analysis of the subset selection reveals a trend of a large amount of significant variables, and the analysis of the model furthermore reveals the importance of categorical variables in predicting price."
+  },
+  {
+    "objectID": "projects/Housing-Write-Up.html#data-collection",
+    "href": "projects/Housing-Write-Up.html#data-collection",
+    "title": "Modeling price of homes",
+    "section": "Data Collection",
+    "text": "Data Collection\nThe data used in this paper was already curated and downloaded from\nhttps://lasanthi-asu.github.io/STT3851ClassRepo/Rmarkdown/Data/housedata.csv\nIt is not clear when and how the data was collected. The only information given is the origin of the data, King County Department of Assessments."
+  },
+  {
+    "objectID": "projects/Housing-Write-Up.html#exploratory-analysis",
+    "href": "projects/Housing-Write-Up.html#exploratory-analysis",
+    "title": "Modeling price of homes",
+    "section": "Exploratory Analysis",
+    "text": "Exploratory Analysis\nExploratory analysis was performed by examining scatter plots, residual plots, and subset selection. In order to correct a positive skew in the residual plot, we applied a base 10 logarithm to price. Base 10 logarithms were added as well to certain predictor variables as it helped adjust the model to the new values and increase the adjusted \\(R^2\\) values. These predictor variables include square footage of the apartments interior living space (sqft_living), square footage of the land space (sqft_lot), and the square footage of interior housing living space for the nearest 15 neighbors (sqft_living15).\n\n\n\n\n\n\n\n\n\nFigure 2.1: The residual plot of the final price model before applying base 10 logarithms to price, sqft_living, sqft_lot, sqft_living15. The adjusted \\(R^2\\) value is 0.8228\n\n\n\n\n\n\n\n\n\nFigure 2.2: The residual plot of the final price model after applying base 10 logarithms to price, sqft_living, sqft_lot, sqft_living15. The adjusted \\(R^2\\) value is 0.8833"
+  },
+  {
+    "objectID": "projects/Housing-Write-Up.html#statistical-modeling",
+    "href": "projects/Housing-Write-Up.html#statistical-modeling",
+    "title": "Modeling price of homes",
+    "section": "Statistical Modeling",
+    "text": "Statistical Modeling\nStatistical concepts such as forward subset selection, analysis of residual plots, and multivariate regression techniques."
+  },
+  {
+    "objectID": "projects/Housing-Write-Up.html#reproducibility",
+    "href": "projects/Housing-Write-Up.html#reproducibility",
+    "title": "Modeling price of homes",
+    "section": "Reproducibility",
+    "text": "Reproducibility\nAll analyses performed in this paper can be reproduced by running the original .Rmd file with RStudio, assuming the link to the original data remains current and the contents thereof remain unchanged. The R packages ggplot2 (Wickham et al. 2020) and knitr (Xie 2021) will need to be installed on the user’s computer."
+  },
+  {
+    "objectID": "projects/Housing-Write-Up.html#references",
+    "href": "projects/Housing-Write-Up.html#references",
+    "title": "Modeling price of homes",
+    "section": "References",
+    "text": "References\nThis document uses ggplot2 by Wickham et al. (2024), ISLR by James et al. (2021), rmarkdown by Allaire et al. (2024), dplyr by Wickham et al. (2023), knitr by Xie (2024b), and bookdown by Xie (2024a)."
   }
 ]
