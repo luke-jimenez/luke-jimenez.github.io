@@ -152,6 +152,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
   <li><a href="#qualitative-analysis" id="toc-qualitative-analysis" class="nav-link" data-scroll-target="#qualitative-analysis">Qualitative analysis</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   </ul>
 </nav>
     </div>
@@ -344,9 +345,84 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>data1 <span class="ot">&lt;-</span> data1 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>data1 <span class="ot">&lt;-</span> data1 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">parental_level_of_education =</span> <span class="fu">factor</span>(data<span class="sc">$</span>parental_level_of_education, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">'some high school'</span>, <span class="st">'high school'</span>, <span class="st">'some college'</span>, <span class="st">"associate's degree"</span>, <span class="st">"bachelor's degree"</span>, <span class="st">"master's degree"</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">'Some High School'</span>,<span class="st">'High School'</span>, <span class="st">'Some College'</span>, <span class="st">"Associate's Degree"</span>, <span class="st">"Bachelor's Degree"</span>, <span class="st">"Master's Degree"</span>), <span class="at">ordered =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data1, <span class="fu">aes</span>(<span class="at">x =</span> parental_level_of_education, <span class="at">y =</span> average_score))<span class="sc">+</span><span class="fu">geom_boxplot</span>(<span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="dv">2</span>), <span class="at">fill =</span><span class="st">'lightgreen'</span>)<span class="sc">+</span><span class="fu">theme_light</span>() <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">'Level of Parental Education'</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">'Average Score'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+<div class="cell-output-display">
+<p><img src="Student-Exam-Analysis_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
+</div>
+<p>We can see from the progression of the box plots that there is slight positive correlation that as the parental level of education increases the students score slowly start to increase. This could be due to parents that have higher levels of education emphasizing the importance of school more. Now lets see if there is any noticeable difference in average score between males and females on the test.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>data1 <span class="ot">&lt;-</span> data1 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">gender =</span> <span class="fu">factor</span>(data<span class="sc">$</span>gender, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Male"</span>, <span class="st">"Female"</span>)))</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data1, <span class="fu">aes</span>(<span class="at">x =</span> average_score, <span class="at">fill =</span> <span class="fu">factor</span>(gender)))<span class="sc">+</span><span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">3</span>) <span class="sc">+</span> <span class="fu">theme_light</span>() <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">'Average Score'</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">'Number of Students'</span>) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">'Gender'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="Student-Exam-Analysis_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>This graph is a little hard to read so lets compare two histograms side by side to see if we can draw any significance. Let’s first split the data into male and female in order to create the graphs. (Note: Another way to create these graphs is to use the “facet_wrap” command from ggplot. We will use this later.)</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>male_data <span class="ot">&lt;-</span> data1 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(gender <span class="sc">==</span> <span class="st">'Male'</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>female_data <span class="ot">&lt;-</span>data1 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(gender <span class="sc">==</span> <span class="st">'Female'</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(male_data, <span class="fu">aes</span>(<span class="at">x =</span> average_score))<span class="sc">+</span><span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">3</span>, <span class="at">fill =</span> <span class="st">'lightblue'</span>) <span class="sc">+</span> <span class="fu">theme_light</span>() <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">'Average Score'</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">'Number of Students'</span>) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">'Male distribution of Scores'</span>) <span class="sc">+</span> <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(male_data<span class="sc">$</span>average_score)), <span class="at">linetype =</span> <span class="st">'dashed'</span>, <span class="at">fill =</span> <span class="st">'lightgrey'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="Student-Exam-Analysis_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(female_data, <span class="fu">aes</span>(<span class="at">x =</span> average_score))<span class="sc">+</span><span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">3</span>, , <span class="at">fill =</span> <span class="st">'lightpink'</span>) <span class="sc">+</span> <span class="fu">theme_light</span>() <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">'Average Score'</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">'Number of Students'</span>) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">'Female distribution of Scores'</span>)<span class="sc">+</span> <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span><span class="fu">mean</span>(female_data<span class="sc">$</span>average_score)), <span class="at">linetype =</span> <span class="st">'dashed'</span>, <span class="at">fill =</span> <span class="st">'lightgrey'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="Student-Exam-Analysis_files/figure-html/unnamed-chunk-12-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The dotted line represents the mean score for females and males respectively. Looking at the distribution and dotted line we can see that males did considerably better on average at this test than the females. We can look even further by comparing the scores of each section; math, reading, and writing.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Math scores</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data1, <span class="fu">aes</span>(<span class="at">x =</span> math_score, <span class="at">fill =</span> gender))<span class="sc">+</span><span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">3</span>) <span class="sc">+</span> </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>() <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">'Average Score'</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">'Number of Students'</span>) <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span>gender) <span class="sc">+</span> <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">'Male'</span> <span class="ot">=</span> <span class="st">'lightblue'</span>, <span class="st">'Female'</span> <span class="ot">=</span> <span class="st">'lightpink'</span>))<span class="sc">+</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">data =</span> data1, <span class="fu">aes</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(math_score)), <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">'Distribution of Math Scores'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="Student-Exam-Analysis_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data1, <span class="fu">aes</span>(<span class="at">x =</span> reading_score, <span class="at">fill =</span> gender))<span class="sc">+</span><span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">3</span>) <span class="sc">+</span> </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>() <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">'Average Score'</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">'Number of Students'</span>) <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span>gender) <span class="sc">+</span> <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">'Male'</span> <span class="ot">=</span> <span class="st">'lightblue'</span>, <span class="st">'Female'</span> <span class="ot">=</span> <span class="st">'lightpink'</span>))<span class="sc">+</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">data =</span> data1, <span class="fu">aes</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(reading_score)), <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">'Distribution of Reading Scores'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="Student-Exam-Analysis_files/figure-html/unnamed-chunk-13-2.png" class="img-fluid" width="672"></p>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data1, <span class="fu">aes</span>(<span class="at">x =</span> writing_score, <span class="at">fill =</span> gender))<span class="sc">+</span><span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">3</span>) <span class="sc">+</span> </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>() <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">'Average Score'</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">'Number of Students'</span>) <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span>gender) <span class="sc">+</span> <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">'Male'</span> <span class="ot">=</span> <span class="st">'lightblue'</span>, <span class="st">'Female'</span> <span class="ot">=</span> <span class="st">'lightpink'</span>))<span class="sc">+</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">data =</span> data1, <span class="fu">aes</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(writing_score)), <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">'Distribution of Writing Scores'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="Student-Exam-Analysis_files/figure-html/unnamed-chunk-13-3.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>From the distributions, there is nothing that we can definitively derive from the graphs. The males do slightly better than females on average in every subject.</p>
+</section>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+<hr>
+<p>In this analysis, we looked at four different variables and how effective they are at predicting success on the test through many metrics such as letter grade, average score, math score, reading score, and writing score. We closely analyzed three different variables to used for this prediction: parental level of education, gender, if the student ate lunch, and if the student took the prep course. We found that both eating lunch and taking the prep course were both indicators that a student was more likely to do well on the test. On average, we saw a small increase in score for those who had parents who had higher levels of education and we also found that males did better on average on this test than females, but not decided by exactly one category of the test.</p>
 
 
 </section>

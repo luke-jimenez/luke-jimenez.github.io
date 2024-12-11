@@ -149,11 +149,60 @@ average_score_bar_lunch
 Shockingly, the proportion of students who had lunch in each letter grade seemed to matter very much to their success. Higher grades like an 'A' or 'B' had most of the students eat lunch, while students who got a 'D' or 'F' were much more likely to not have eaten lunch. Another variable we can take a look at is the parental education of the student and the impact of that on their average score. In order to do this, lets first turn the parental education variable into a factor of ranked levels.
 
 ```{r}
-data1 <- data1 %>% mutate()
+
+data1 <- data1 %>% mutate(parental_level_of_education = factor(data$parental_level_of_education, levels = c('some high school', 'high school', 'some college', "associate's degree", "bachelor's degree", "master's degree"), labels = c('Some High School','High School', 'Some College', "Associate's Degree", "Bachelor's Degree", "Master's Degree"), ordered = TRUE))
+
+ggplot(data1, aes(x = parental_level_of_education, y = average_score))+geom_boxplot(position = position_dodge(width = 2), fill ='lightgreen')+theme_light() + xlab('Level of Parental Education') + ylab('Average Score')
+```
+We can see from the progression of the box plots that there is slight positive correlation that as the parental level of education increases the students score slowly start to increase. This could be due to parents that have higher levels of education emphasizing the importance of school more. Now lets see if there is any noticeable difference in average score between males and females on the test.
+
+
+```{r}
+data1 <- data1 %>% mutate(gender = factor(data$gender, levels = c(0, 1),labels = c("Male", "Female")))
+
+ggplot(data1, aes(x = average_score, fill = factor(gender)))+geom_histogram(binwidth = 3) + theme_light() + xlab('Average Score') + ylab('Number of Students') + labs(fill = 'Gender')
+```
+
+This graph is a little hard to read so lets compare two histograms side by side to see if we can draw any significance. Let's first split the data into male and female in order to create the graphs. (Note: Another way to create these graphs is to use the "facet_wrap" command from ggplot. We will use this later.)
+
+```{r, warning = FALSE}
+
+male_data <- data1 %>% filter(gender == 'Male')
+female_data <-data1 %>% filter(gender == 'Female')
+
+ggplot(male_data, aes(x = average_score))+geom_histogram(binwidth = 3, fill = 'lightblue') + theme_light() + xlab('Average Score') + ylab('Number of Students') + labs(title = 'Male distribution of Scores') + geom_vline(aes(xintercept = mean(male_data$average_score)), linetype = 'dashed', fill = 'lightgrey')
+  
+  
+ggplot(female_data, aes(x = average_score))+geom_histogram(binwidth = 3, , fill = 'lightpink') + theme_light() + xlab('Average Score') + ylab('Number of Students') + labs(title = 'Female distribution of Scores')+ geom_vline(aes(xintercept =mean(female_data$average_score)), linetype = 'dashed', fill = 'lightgrey')
+
 ```
 
 
+The dotted line represents the mean score for females and males respectively. Looking at the distribution and dotted line we can see that males did considerably better on average at this test than the females. We can look even further by comparing the scores of each section; math, reading, and writing.
 
+```{r}
+# Math scores
+
+ggplot(data1, aes(x = math_score, fill = gender))+geom_histogram(binwidth = 3) + 
+  theme_light() + xlab('Average Score') + ylab('Number of Students') + facet_wrap(~gender) + scale_fill_manual(values = c('Male' = 'lightblue', 'Female' = 'lightpink'))+
+  geom_vline(data = data1, aes(xintercept = mean(math_score)), linetype = "dashed", color = "black") + labs(title = 'Distribution of Math Scores')
+
+ggplot(data1, aes(x = reading_score, fill = gender))+geom_histogram(binwidth = 3) + 
+  theme_light() + xlab('Average Score') + ylab('Number of Students') + facet_wrap(~gender) + scale_fill_manual(values = c('Male' = 'lightblue', 'Female' = 'lightpink'))+
+  geom_vline(data = data1, aes(xintercept = mean(reading_score)), linetype = "dashed", color = "black") + labs(title = 'Distribution of Reading Scores')
+
+ggplot(data1, aes(x = writing_score, fill = gender))+geom_histogram(binwidth = 3) + 
+  theme_light() + xlab('Average Score') + ylab('Number of Students') + facet_wrap(~gender) + scale_fill_manual(values = c('Male' = 'lightblue', 'Female' = 'lightpink'))+
+  geom_vline(data = data1, aes(xintercept = mean(writing_score)), linetype = "dashed", color = "black") + labs(title = 'Distribution of Writing Scores')
+```
+
+From the distributions, there is nothing that we can definitively derive from the graphs. The males do slightly better than females on average in every subject.
+
+# Conclusion
+
+------
+
+In this analysis, we looked at four different variables and how effective they are at predicting success on the test through many metrics such as letter grade, average score, math score, reading score, and writing score. We closely analyzed three different variables to used for this prediction: parental level of education, gender, if the student ate lunch, and if the student took the prep course. We found that both eating lunch and taking the prep course were both indicators that a student was more likely to do well on the test. On average, we saw a small increase in score for those who had parents who had higher levels of education and we also found that males did better on average on this test than females, but not decided by exactly one category of the test.
 
 
 
