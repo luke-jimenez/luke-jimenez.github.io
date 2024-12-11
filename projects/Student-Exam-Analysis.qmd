@@ -48,6 +48,8 @@ We have 10 variables total:
 - **"average_score"**: The average score a student achieved between their math, reading, and writing scores
 
 
+We will be using these variables to find predictors for how well a student did on the test in order to better prepare the next generation of fictitious students. We will be answering questions such as how important the preparation course is for success and how important eating lunch is for your test score.
+
 # Qualitative analysis
 
 Now that we understand the data set, lets look to see what different variables helped improve or decrease a students test score. To better understand the distribution of the scores we can look at the math, reading, and writing scores as box plots.
