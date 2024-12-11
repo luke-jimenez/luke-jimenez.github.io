@@ -10,6 +10,7 @@ title: "Projects"
 
 * [Personal project using 'ggplot2' and 'knitr' in R for data analysis](./projects/Housing-Write-Up.Rmd)
 
+
 * [Final project - Data Analysis of Student Exam Scores](./projects/Student-Exam-Analysis.qmd)
 
 
